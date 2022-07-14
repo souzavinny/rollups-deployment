@@ -1,0 +1,3 @@
+dapp:
+  image: docker.io/cartesi/dapp:knn-0.8.0-server
+  contractAddress: "0x997cc8e9432b27a7ebB88f1900D91E60872dEDDd"

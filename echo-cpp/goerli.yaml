@@ -1,0 +1,3 @@
+dapp:
+  image: docker.io/cartesi/dapp:echo-cpp-0.8.0-server
+  contractAddress: "0x50AeE82A25D15bAE5D88034f325B06089Dd26FD0"
