@@ -1,0 +1,85 @@
+on:
+  pull_request:
+
+name: Check Cartesi DApp Deployment
+
+jobs:
+  changedfiles:
+    runs-on: ubuntu-latest
+    outputs:
+      dapps: ${{ steps.changes.outputs.dapps }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changes
+        run: echo "::set-output name=dapps::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .yaml$ | grep -v .github | jq -Rnc '[inputs]')"
+
+  check-deploy:
+    runs-on: ubuntu-latest
+    needs: changedfiles
+    if: ${{needs.changedfiles.outputs.dapps}}
+    strategy:
+      matrix:
+        dapp: ${{ fromJson(needs.changedfiles.outputs.dapps) }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Read DApp descriptor
+        id: dapp_descriptor
+        run: |
+          printf "Checking %s DApp descriptor...\n" ${{ matrix.dapp }}
+          not_dapp=$(yq eval '.dapp.image | (. == null)' ${{ matrix.dapp }} | head -n 1)
+          if [[ "$not_dapp" == "true" ]]; then
+            printf "Not a DApp descriptor\n"
+            exit 1
+          fi
+
+          echo "::set-output name=dapp_image::$(yq eval '.dapp.image' ${{ matrix.dapp }})"
+          echo "::set-output name=dapp_contract_address::$(yq eval '.dapp.contractAddress' ${{ matrix.dapp }})"
+          echo "::set-output name=dapp_name::$(dirname ${{ matrix.dapp }})"
+          _network=$(basename ${{ matrix.dapp }})
+          echo "::set-output name=network::${_network%.yaml}"
+
+      - name: Get deployed DApp Machine Hash
+        id: contract_hash
+        env:
+          INFURA_ID: ${{ secrets.INFURA_ID }}
+        run: |
+          RPC_URL="https://${{ steps.dapp_descriptor.outputs.network }}.infura.io/v3/${INFURA_ID}"
+          _contract_machine_hash="$(cast call --chain ${{ steps.dapp_descriptor.outputs.network }} --rpc-url $RPC_URL ${{ steps.dapp_descriptor.outputs.dapp_contract_address  }} 'getTemplateHash()')"
+          echo "::set-output name=contract_machine_hash::${_contract_machine_hash:2}"
+
+      - name: Get DApp Container Machine Hash
+        id: container_hash
+        run: |
+          docker container create --name=${{ steps.dapp_descriptor.outputs.dapp_name }}  ${{ steps.dapp_descriptor.outputs.dapp_image }}
+          docker container cp ${{ steps.dapp_descriptor.outputs.dapp_name }}:/opt/cartesi/share/dapp-bin/hash ./hash
+          echo "::set-output name=container_machine_hash::$(cat ./hash | xxd -ps -c 256)"
+          docker container rm ${{ steps.dapp_descriptor.outputs.dapp_name }}
+
+      - name: Check hashes
+        run: |
+          printf "Checking if Cartesi Machine Image %s hash matches the one deployed at contract %s...\n" ${{ steps.dapp_descriptor.outputs.dapp_image }} ${{ steps.dapp_descriptor.outputs.dapp_contract_address }} 
+          printf "Contract Machine Hash: %s\n" ${{ steps.contract_hash.outputs.contract_machine_hash }}
+          printf "Container Machine Hash: %s\n" ${{ steps.container_hash.outputs.container_machine_hash }}
+
+          if [[ ${{ steps.contract_hash.outputs.contract_machine_hash }} == ${{ steps.container_hash.outputs.container_machine_hash }} ]]; then
+            printf "OK: Hashes match\n"
+          else
+            printf "ERROR: Hashes do not match\n"
+            exit 1
+          fi
