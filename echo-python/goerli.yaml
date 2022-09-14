@@ -1,3 +1,3 @@
 dapp:
-  image: docker.io/cartesi/dapp:echo-python-0.8.0-server
-  contractAddress: "0xAF500C1C68D412b6Fd18EDC190f45B98604E0697"
+  image: docker.io/cartesi/dapp:echo-python-0.9.0-server
+  contractAddress: "0x72c6A1A3192F36Ec9ed5f76923F49B47826112F8"
