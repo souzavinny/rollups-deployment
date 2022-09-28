@@ -1,0 +1,3 @@
+dapp:
+  image: docker.io/marcussouza90/marcus-repo:calculator
+  contractAddress: "0xE0041F2aFeA88004E0C8AA0cA6060DF47303Ee60"
