@@ -50,10 +50,8 @@ jobs:
 
       - name: Get deployed DApp Machine Hash
         id: contract_hash
-        env:
-          INFURA_ID: ${{ secrets.INFURA_ID }}
         run: |
-          RPC_URL="https://${{ steps.dapp_descriptor.outputs.network }}.infura.io/v3/${INFURA_ID}"
+          RPC_URL="https://${{ steps.dapp_descriptor.outputs.network }}.infura.io/v3/501b4a58738b45919b9c27d709fd624d"
           _contract_machine_hash="$(cast call --chain ${{ steps.dapp_descriptor.outputs.network }} --rpc-url $RPC_URL ${{ steps.dapp_descriptor.outputs.dapp_contract_address  }} 'getTemplateHash()')"
           echo "::set-output name=contract_machine_hash::${_contract_machine_hash:2}"
 
