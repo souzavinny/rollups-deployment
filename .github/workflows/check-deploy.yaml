@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - name: Get changed files
         id: changes
-        run: echo "::set-output name=dapps::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .yaml$ | grep -v .github | jq -Rnc '[inputs]')"
+        run: echo "::set-output name=dapps::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '.*.y[a]*ml$' | grep -v .github | jq -Rnc '[inputs]')"
 
   check-deploy:
     runs-on: ubuntu-latest
