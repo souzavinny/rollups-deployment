@@ -1,0 +1,3 @@
+dapp:
+  image: docker.io/marcussouza90/marcus-repo:m2cgen
+  contractAddress: "0x912D9dFA80C617e5E9ef4F43ECA01a05cc2123E1"
