@@ -48,6 +48,11 @@ jobs:
           _network=$(basename ${{ matrix.dapp }})
           echo "::set-output name=network::${_network%.yaml}"
 
+      - name: Check if Cartesi(0x18930e8a66a1DbE21D00581216789AAB7460Afd0) is the validator
+        run: |
+          RPC_URL="https://${{ steps.dapp_descriptor.outputs.network }}.infura.io/v3/501b4a58738b45919b9c27d709fd624d"
+          cast call --chain ${{ steps.dapp_descriptor.outputs.network }} --rpc-url $RPC_URL ${{ steps.dapp_descriptor.outputs.dapp_contract_address  }} 'getValidatorIndex(address)' 0x18930e8a66a1DbE21D00581216789AAB7460Afd0
+
       - name: Get deployed DApp Machine Hash
         id: contract_hash
         run: |
