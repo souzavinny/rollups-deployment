@@ -46,7 +46,7 @@ jobs:
           echo "::set-output name=dapp_contract_address::$(yq eval '.dapp.contractAddress' ${{ matrix.dapp }})"
           echo "::set-output name=dapp_name::$(dirname ${{ matrix.dapp }})"
           _network=$(basename ${{ matrix.dapp }})
-          echo "::set-output name=network::${_network%.yaml}"
+          echo "::set-output name=network::${_network%.y*ml}"
 
       - name: Check if Cartesi(0x18930e8a66a1DbE21D00581216789AAB7460Afd0) is the validator
         run: |
