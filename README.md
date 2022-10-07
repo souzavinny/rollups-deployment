@@ -63,3 +63,12 @@ After the review and approval of the pull request by the Cartesi Team the DApp v
 - `env`: one of the currently supported environments: [`dev`, `staging`, `prod` (empty)]
 
 As an example the `echo-python` DApp above, when deployed to the staging environment of Goerli would be accessible at https://0xaf500c1c68d412b6fd18edc190f45b98604e0697.goerli.rollups.staging.cartesi.io/graphql.
+
+## Published DApps
+
+Cartesi is providing hosting of Cartesi node for the backend of decentralized application. The implementation and hosting of a frontend is not in the scope of this service. Find below web applications implemented and hosted by the community:
+
+- Calculator: https://web3calculator-stg.surge.sh/
+- Iris flower ML classification: https://irisclassifier-stg.surge.sh/
+- Titanic survival ML model: https://titanicsurvivor-stg.surge.sh/
+- Voting: https://cartesi-voting.surge.sh/
