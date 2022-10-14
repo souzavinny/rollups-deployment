@@ -66,7 +66,7 @@ As an example the `echo-python` DApp above, when deployed to the staging environ
 
 ## Published DApps
 
-Cartesi is running Cartesi Nodes for decentralized applications. In the future, other node runners will also run their nodes and validate DApps. The implementation and hosting of a frontend is not in the scope of this service. Find below DApps implemented and hosted by the community:
+Cartesi is initially running Cartesi nodes for decentralized applications. In the future, other node runners will also run their nodes and validate Cartesi Rollups DApps. The implementation and hosting of a frontend is not in the scope of what is done by the Cartesi team. Find below the first hacks implemented and hosted by the community:
 
 - Calculator: https://web3calculator-stg.surge.sh/
 - Iris flower ML classification: https://irisclassifier-stg.surge.sh/
