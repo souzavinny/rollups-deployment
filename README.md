@@ -71,4 +71,3 @@ Cartesi is providing hosting of Cartesi node for the backend of decentralized ap
 - Calculator: https://web3calculator-stg.surge.sh/
 - Iris flower ML classification: https://irisclassifier-stg.surge.sh/
 - Titanic survival ML model: https://titanicsurvivor-stg.surge.sh/
-- Voting: https://cartesi-voting.surge.sh/
