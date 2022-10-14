@@ -66,7 +66,7 @@ As an example the `echo-python` DApp above, when deployed to the staging environ
 
 ## Published DApps
 
-Cartesi is providing hosting of Cartesi node for the backend of decentralized application. The implementation and hosting of a frontend is not in the scope of this service. Find below web applications implemented and hosted by the community:
+Cartesi is running Cartesi Nodes for decentralized applications. In the future, other node runners will also run their nodes and validate DApps. The implementation and hosting of a frontend is not in the scope of this service. Find below DApps implemented and hosted by the community:
 
 - Calculator: https://web3calculator-stg.surge.sh/
 - Iris flower ML classification: https://irisclassifier-stg.surge.sh/
