@@ -1,3 +1,0 @@
-dapp:
-  image: docker.io/cartesi/dapp:sqlite-0.11.1-server
-  contractAddress: "0x0b1b4679e373e4c683b461aB56902ed5413541e4"
