@@ -56,11 +56,11 @@ jobs:
           chiado)
             RPC_URL="https://rpc.chiadochain.net"
           ;;
-          goerli|polygon-mumbai|optimism-goerli|arbitrum-goerli)
+          goerli|polygon-mumbai|optimism-goerli|arbitrum-goerli|sepolia)
             RPC_URL="https://${{ steps.dapp_descriptor.outputs.network }}.infura.io/v3/501b4a58738b45919b9c27d709fd624d"
           ;;
           *)
-          printg "%s not supported\n" $NETWORK
+          printf "%s not supported\n" $NETWORK
           exit 1
           esac
 
