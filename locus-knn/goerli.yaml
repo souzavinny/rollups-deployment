@@ -1,3 +1,0 @@
-dapp:
-  image: docker.io/marcussouza90/marcus-repo:knn
-  contractAddress: "0x332b30d6B862f060a6EF5DA0Ac338BE08A4Ce95a"

@@ -1,3 +1,0 @@
-dapp:
-  image: docker.io/cartesi/dapp:echo-low-level-0.13.0-server
-  contractAddress: 0x249aaac870D2d98bE5c6bb0cdC7efD28C0AA1F5A
